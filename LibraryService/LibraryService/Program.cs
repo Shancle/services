@@ -12,7 +12,7 @@ namespace LibraryService
     {
         public static void Main(string[] args)
         {
-            var host = new ServiceHost(typeof(Service.LibraryService), new Uri("http://localhost:8886/libraryservice"));
+            var host = new ServiceHost(typeof(Service.LibraryService));
 
             try
             {

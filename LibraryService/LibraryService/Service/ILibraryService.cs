@@ -4,22 +4,28 @@ using LibraryService.Data;
 
 namespace LibraryService.Service
 {
-    [ServiceContract]
+    [ServiceContract(SessionMode = SessionMode.Required)]
     public interface ILibraryService
     {
-        [OperationContract]
+        [OperationContract(IsInitiating = true)]
+        void Enter(int id, string name);
+
+        [OperationContract(IsInitiating = false)]
         void Add(Book book);
 
-        [OperationContract]
+        [OperationContract(IsInitiating = false)]
         Book GetById(int id);
 
-        [OperationContract]
+        [OperationContract(IsInitiating = false)]
         List<Book> GetByAuthor(string author);
 
-        [OperationContract]
+        [OperationContract(IsInitiating = false)]
         void TakeBook(int id);
 
-        [OperationContract]
+        [OperationContract(IsInitiating = false)]
         void ReturnBook(int id);
+
+        [OperationContract(IsInitiating = false, IsTerminating = true)]
+        void ApplyСhanges();
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="fcbbc613-79d7-4779-b4b5-6384ae1bf0f9" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0aa75379-62f5-4b4c-9929-69c24e66407a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,14 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8886/libraryservice" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8000/libraryservice" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="libraryservice.disco" MetadataType="Disco" ID="6bdc9357-47b4-42ca-b2c1-48f2a0caadd0" SourceId="1" SourceUrl="http://localhost:8886/libraryservice?disco" />
-    <MetadataFile FileName="libraryservice.xsd" MetadataType="Schema" ID="5f9225c4-c56c-423c-bcee-3ae35940e70a" SourceId="1" SourceUrl="http://localhost:8886/libraryservice?xsd=xsd2" />
-    <MetadataFile FileName="libraryservice1.xsd" MetadataType="Schema" ID="0ff42c08-8bcd-473e-a820-02fa511dd264" SourceId="1" SourceUrl="http://localhost:8886/libraryservice?xsd=xsd0" />
-    <MetadataFile FileName="libraryservice2.xsd" MetadataType="Schema" ID="bfe8b6ed-5b83-4661-bd63-dae587a87c7d" SourceId="1" SourceUrl="http://localhost:8886/libraryservice?xsd=xsd1" />
-    <MetadataFile FileName="LibraryService.wsdl" MetadataType="Wsdl" ID="93c9ba4c-1e31-4b97-8348-a564a289dd93" SourceId="1" SourceUrl="http://localhost:8886/libraryservice?wsdl" />
+    <MetadataFile FileName="libraryservice.xsd" MetadataType="Schema" ID="51e0f76f-c94b-4752-8a03-5a310cdf69de" SourceId="1" SourceUrl="http://localhost:8000/libraryservice?xsd=xsd0" />
+    <MetadataFile FileName="libraryservice1.xsd" MetadataType="Schema" ID="430e395f-ccb6-4b37-b6a4-e2ee7fb90a96" SourceId="1" SourceUrl="http://localhost:8000/libraryservice?xsd=xsd1" />
+    <MetadataFile FileName="libraryservice2.xsd" MetadataType="Schema" ID="76928bee-686a-4358-a3e9-d27aced1b947" SourceId="1" SourceUrl="http://localhost:8000/libraryservice?xsd=xsd2" />
+    <MetadataFile FileName="libraryservice.disco" MetadataType="Disco" ID="7cd15a54-8d5a-492f-a27e-26c7c222c6a7" SourceId="1" SourceUrl="http://localhost:8000/libraryservice?disco" />
+    <MetadataFile FileName="LibraryService.wsdl" MetadataType="Wsdl" ID="08937ec5-1d8e-47cd-aaa1-b4e7619de5ed" SourceId="1" SourceUrl="http://localhost:8000/libraryservice?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

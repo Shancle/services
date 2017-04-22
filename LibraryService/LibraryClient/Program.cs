@@ -9,6 +9,8 @@ namespace LibraryClient
         {
             var client = new LibraryServiceClient();
 
+            client.Enter(1, "Client1");
+
             var bookFromService = client.GetById(1);
             Console.WriteLine(bookFromService.Name);
 
@@ -24,6 +26,20 @@ namespace LibraryClient
             }
 
             client.TakeBook(1);
+            client.TakeBook(2);
+            client.TakeBook(3);
+            client.TakeBook(4);
+            client.TakeBook(5);
+            client.TakeBook(6);
+
+            client.ApplyСhanges();
+            client.Close();
+
+            client = new LibraryServiceClient();
+
+            client.Enter(1, "Client1");
+
+            client.TakeBook(6);
 
             try
             {
@@ -32,7 +48,6 @@ namespace LibraryClient
             catch (Exception)
             {
                 Console.WriteLine("книга была взята");
-                client.ReturnBook(1);
             }
             Console.ReadLine();
         }
