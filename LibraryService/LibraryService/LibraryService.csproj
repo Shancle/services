@@ -69,6 +69,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Service\ILibraryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\ILibraryServiceCallback.cs" />
     <Compile Include="Service\LibraryService.cs" />
   </ItemGroup>
   <ItemGroup>

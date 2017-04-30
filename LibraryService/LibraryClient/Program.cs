@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ServiceModel;
 using LibraryClient.LibraryService;
 
 namespace LibraryClient
@@ -7,7 +8,7 @@ namespace LibraryClient
     {
         static void Main(string[] args)
         {
-            var client = new LibraryServiceClient();
+            var client = new LibraryServiceClient(new InstanceContext(new ClientCallback()));
 
             client.Enter(1, "Client1");
 
@@ -26,7 +27,6 @@ namespace LibraryClient
             }
 
             client.TakeBook(1);
-            client.TakeBook(2);
             client.TakeBook(3);
             client.TakeBook(4);
             client.TakeBook(5);
@@ -35,11 +35,19 @@ namespace LibraryClient
             client.ApplyСhanges();
             client.Close();
 
-            client = new LibraryServiceClient();
+            client = new LibraryServiceClient(new InstanceContext(new ClientCallback()));
 
-            client.Enter(1, "Client1");
+            client.Enter(14, "Client1");
 
-            client.TakeBook(6);
+            try
+            {
+                client.TakeBook(2);
+            }
+            catch (FaultException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            client.ApplyСhanges();
 
             try
             {

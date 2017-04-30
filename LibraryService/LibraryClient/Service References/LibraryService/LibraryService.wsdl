@@ -61,6 +61,12 @@
   <wsdl:message name="ILibraryService_ApplyСhanges_OutputMessage">
     <wsdl:part name="parameters" element="tns:ApplyСhangesResponse" />
   </wsdl:message>
+  <wsdl:message name="ILibraryService_Exit_InputMessage">
+    <wsdl:part name="parameters" element="tns:Exit" />
+  </wsdl:message>
+  <wsdl:message name="ILibraryService_OnCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:OnCallback" />
+  </wsdl:message>
   <wsdl:portType msc:usingSession="true" name="ILibraryService">
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Enter">
       <wsdl:input wsaw:Action="http://tempuri.org/ILibraryService/Enter" message="tns:ILibraryService_Enter_InputMessage" />
@@ -89,6 +95,12 @@
     <wsdl:operation msc:isInitiating="false" msc:isTerminating="true" name="ApplyСhanges">
       <wsdl:input wsaw:Action="http://tempuri.org/ILibraryService/ApplyСhanges" message="tns:ILibraryService_ApplyСhanges_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ILibraryService/ApplyСhangesResponse" message="tns:ILibraryService_ApplyСhanges_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="false" msc:isTerminating="true" name="Exit">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILibraryService/Exit" message="tns:ILibraryService_Exit_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="OnCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/ILibraryService/OnCallback" message="tns:ILibraryService_OnCallback_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_ILibraryService" type="tns:ILibraryService">
@@ -153,6 +165,18 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Exit">
+      <soap12:operation soapAction="http://tempuri.org/ILibraryService/Exit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="OnCallback">
+      <soap12:operation soapAction="http://tempuri.org/ILibraryService/OnCallback" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

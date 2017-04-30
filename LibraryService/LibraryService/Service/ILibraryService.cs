@@ -4,7 +4,7 @@ using LibraryService.Data;
 
 namespace LibraryService.Service
 {
-    [ServiceContract(SessionMode = SessionMode.Required)]
+    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(ILibraryServiceCallback))]
     public interface ILibraryService
     {
         [OperationContract(IsInitiating = true)]
@@ -27,5 +27,8 @@ namespace LibraryService.Service
 
         [OperationContract(IsInitiating = false, IsTerminating = true)]
         void ApplyСhanges();
+
+        [OperationContract(IsInitiating = false, IsTerminating = true, IsOneWay = true)]
+        void Exit();
     }
 }

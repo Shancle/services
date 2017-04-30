@@ -140,7 +140,7 @@ namespace LibraryClient.LibraryService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="LibraryService.ILibraryService", SessionMode=System.ServiceModel.SessionMode.Required)]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="LibraryService.ILibraryService", CallbackContract=typeof(LibraryClient.LibraryService.ILibraryServiceCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
     public interface ILibraryService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILibraryService/Enter", ReplyAction="http://tempuri.org/ILibraryService/EnterResponse")]
@@ -184,6 +184,19 @@ namespace LibraryClient.LibraryService {
         
         [System.ServiceModel.OperationContractAttribute(IsTerminating=true, IsInitiating=false, Action="http://tempuri.org/ILibraryService/ApplyСhanges", ReplyAction="http://tempuri.org/ILibraryService/ApplyСhangesResponse")]
         System.Threading.Tasks.Task ApplyСhangesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, IsTerminating=true, IsInitiating=false, Action="http://tempuri.org/ILibraryService/Exit")]
+        void Exit();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, IsTerminating=true, IsInitiating=false, Action="http://tempuri.org/ILibraryService/Exit")]
+        System.Threading.Tasks.Task ExitAsync();
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface ILibraryServiceCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILibraryService/OnCallback")]
+        void OnCallback();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -192,25 +205,26 @@ namespace LibraryClient.LibraryService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class LibraryServiceClient : System.ServiceModel.ClientBase<LibraryClient.LibraryService.ILibraryService>, LibraryClient.LibraryService.ILibraryService {
+    public partial class LibraryServiceClient : System.ServiceModel.DuplexClientBase<LibraryClient.LibraryService.ILibraryService>, LibraryClient.LibraryService.ILibraryService {
         
-        public LibraryServiceClient() {
+        public LibraryServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
         }
         
-        public LibraryServiceClient(string endpointConfigurationName) : 
-                base(endpointConfigurationName) {
+        public LibraryServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
         }
         
-        public LibraryServiceClient(string endpointConfigurationName, string remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public LibraryServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public LibraryServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public LibraryServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public LibraryServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(binding, remoteAddress) {
+        public LibraryServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
         }
         
         public void Enter(int id, string name) {
@@ -267,6 +281,14 @@ namespace LibraryClient.LibraryService {
         
         public System.Threading.Tasks.Task ApplyСhangesAsync() {
             return base.Channel.ApplyСhangesAsync();
+        }
+        
+        public void Exit() {
+            base.Channel.Exit();
+        }
+        
+        public System.Threading.Tasks.Task ExitAsync() {
+            return base.Channel.ExitAsync();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel;
 using LibraryService.Data;
 
@@ -17,11 +18,22 @@ namespace LibraryService.Service
             new Book(5, "сложное название 2", "Автор 2", 2016, BookType.Chronicle),
             new Book(6, "сложное название 3", "Автор 3", 2017, BookType.ResearchArticle)
         };
-        private static readonly Dictionary<int, List<Book>> UserBooks = new Dictionary<int, List<Book>>(); 
+
+        private static readonly Dictionary<int, List<Tuple<Book, DateTime>>> UserBooks =
+            new Dictionary<int, List<Tuple<Book, DateTime>>>
+            {
+                {
+                    14, new List<Tuple<Book, DateTime>>
+                    {
+                        Tuple.Create(Books[1], DateTime.Now.AddDays(-40))
+                    }
+                }
+            };
 
         private int ClientId { get; set; }
         private string ClientName { get; set; }
         private const int MaxBooksPerClient = 5;
+        private ILibraryServiceCallback Callback => OperationContext.Current.GetCallbackChannel<ILibraryServiceCallback>();
 
         public void Enter(int id, string name)
         {
@@ -29,7 +41,7 @@ namespace LibraryService.Service
             ClientName = name;
             if (!UserBooks.ContainsKey(id))
             {
-                UserBooks.Add(id, new List<Book>());
+                UserBooks.Add(id, new List<Tuple<Book, DateTime>>());
             }
         }
 
@@ -40,12 +52,26 @@ namespace LibraryService.Service
 
         public Book GetById(int id)
         {
-            return Books.Find(book => book.Id == id);
+            var book = Books.Find(x => x.Id == id);
+
+            if (book == null)
+            {
+                throw new FaultException("Книга не найдена");
+            }
+
+            return book;
         }
 
         public List<Book> GetByAuthor(string author)
         {
-            return Books.FindAll(book => book.Author == author);
+            var books = Books.FindAll(book => book.Author == author);
+
+            if (books == null)
+            {
+                throw new FaultException("Книги не найдены");
+            }
+
+            return books;
         }
 
         public void TakeBook(int id)
@@ -53,15 +79,15 @@ namespace LibraryService.Service
             var book = Books.Find(x => x.Id == id);
             if (!book.IsInLibrary)
             {
-                throw new InvalidOperationException("Книга уже выдана");
+                throw new FaultException("Книга уже выдана");
             }
             if (UserBooks[ClientId].Count == MaxBooksPerClient)
             {
                 Console.WriteLine($"{ClientName} слишком жадный");
-                return; ; // Todo: fault in next lesson
+                throw new FaultException("Не больше 5 книг в руки");
             }
             book.IsInLibrary = false;
-            UserBooks[ClientId].Add(book);
+            UserBooks[ClientId].Add(Tuple.Create(book, DateTime.Now));
             Console.WriteLine($"{ClientName} взял книгу {book.Name}");
         }
 
@@ -70,17 +96,27 @@ namespace LibraryService.Service
             var book = Books.Find(x => x.Id == id);
             if (book.IsInLibrary)
             {
-                throw new InvalidOperationException("Книга уже в библиотеке");
+                throw new FaultException("Книга уже в библиотеке");
             }
             book.IsInLibrary = true;
-            UserBooks[ClientId].Remove(book);
+            UserBooks[ClientId].RemoveAll(x => x.Item1.Id == book.Id);
             Console.WriteLine($"{ClientName} вернул книгу {book.Name}");
         }
 
-        [OperationBehavior(ReleaseInstanceMode = ReleaseInstanceMode.AfterCall)]
         public void ApplyСhanges()
         {
+            if (UserBooks[ClientId].Any(x => (DateTime.Now - x.Item2).TotalDays > DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)))
+            {
+                Console.WriteLine("Где книги и когда принесёшь?");
+                Callback.OnCallback();
+            }
             Console.WriteLine($"Клиент {ClientName} ушёл");
+        }
+
+        [OperationBehavior(ReleaseInstanceMode = ReleaseInstanceMode.AfterCall)]
+        public void Exit()
+        {
+            Console.WriteLine($"Клиент {ClientName} сбежал");
         }
 
         public void Dispose()
